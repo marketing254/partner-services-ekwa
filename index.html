@@ -97,8 +97,20 @@ const FormSelect=({label,name,value,onChange,required,options,light,placeholder=
 const FormCheckbox=({label,name,checked,onChange,light})=>(<label className={`flex items-start gap-3 cursor-pointer font-display text-[0.93rem] leading-snug ${light?'text-white/80':'text-ekwa-ink/75'}`}><input type="checkbox" name={name} checked={checked} onChange={onChange} className="mt-1 w-4 h-4 accent-ekwa-orange flex-shrink-0"/><span>{label}</span></label>);
 const SubmitButton=({children,light,disabled})=>(<motion.button type="submit" disabled={disabled} whileHover={{y:disabled?0:-1}} whileTap={{scale:disabled?1:0.98}} className={`group inline-flex items-center justify-center gap-2 bg-ekwa-orange hover:bg-ekwa-orange-dark text-white font-display font-semibold px-7 py-4 rounded-[3px] shadow-cta hover:shadow-cta-hover transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed`}>{children}<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1"/></motion.button>);
 
-// Mailto submission helper — works without backend.
-// To swap to a real endpoint (HubSpot, Formspree, etc.), replace mailto with a fetch() to your form-handler URL.
+// ── Form submission ────────────────────────────────────────────────────────
+// Submissions POST to a Google Apps Script Web App, which writes a row to the
+// Google Sheet and emails the team. Paste your deployed /exec URL below.
+const SHEET_ENDPOINT='PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+// Posts the form to the Sheet. Uses text/plain so the browser treats it as a
+// "simple" request (no CORS preflight, which Apps Script can't answer).
+const submitToSheet=(formType,payload)=>fetch(SHEET_ENDPOINT,{
+  method:'POST',
+  headers:{'Content-Type':'text/plain;charset=utf-8'},
+  body:JSON.stringify({formType,...payload}),
+});
+
+// Fallback: open the visitor's email client if the endpoint isn't set or fails.
 const buildMailto=(to,subject,fields)=>{
   const body=Object.entries(fields).filter(([_,v])=>v!==''&&v!==false&&!(Array.isArray(v)&&v.length===0)).map(([k,v])=>`${k}: ${Array.isArray(v)?v.join(', '):v}`).join('\n');
   return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -308,14 +320,22 @@ const Pricing=()=>(<section id="pricing" className="py-28 md:py-36 bg-ekwa-stone
 const EventsWaitlistForm=()=>{
   const [data,setData]=useState({name:'',email:'',practice:'',industry:'',topics:'',isPartner:false});
   const [submitted,setSubmitted]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+  const [error,setError]=useState('');
   const onChange=(e)=>{const {name,value,type,checked}=e.target;setData({...data,[name]:type==='checkbox'?checked:value});};
-  const onSubmit=(e)=>{
+  const onSubmit=async(e)=>{
     e.preventDefault();
-    const fields={Name:data.name,Email:data.email,'Practice / Business':data.practice,Industry:data.industry,'Topics of interest':data.topics,'Current Ekwa partner':data.isPartner?'Yes':'No'};
-    window.location.href=buildMailto('partnerservices@ekwa.com','Events Waitlist Signup',fields);
-    setSubmitted(true);
+    setSubmitting(true);setError('');
+    try{
+      await submitToSheet('waitlist',data);
+      setSubmitted(true);
+    }catch(err){
+      setError("We couldn't reach the server. Email us at partnerservices@ekwa.com and we'll add you.");
+    }finally{
+      setSubmitting(false);
+    }
   };
-  if(submitted) return (<div className="bg-white rounded-2xl border border-ekwa-line shadow-card p-8 md:p-10 text-center"><div className="w-14 h-14 mx-auto mb-5 rounded-full bg-ekwa-orange/10 flex items-center justify-center"><Check className="w-7 h-7 text-ekwa-orange" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.5rem] text-ekwa-ink mb-3">You're on the list.</h3><p className="text-ekwa-ink/65 text-[0.96rem] leading-relaxed">Your email client should have opened with a pre-filled note. Hit send and we'll be in touch when Events intake opens late 2026. If your email client didn't open, drop us a line at <a className="text-ekwa-orange underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
+  if(submitted) return (<div className="bg-white rounded-2xl border border-ekwa-line shadow-card p-8 md:p-10 text-center"><div className="w-14 h-14 mx-auto mb-5 rounded-full bg-ekwa-orange/10 flex items-center justify-center"><Check className="w-7 h-7 text-ekwa-orange" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.5rem] text-ekwa-ink mb-3">You're on the list.</h3><p className="text-ekwa-ink/65 text-[0.96rem] leading-relaxed">Thanks — we've got your details and we'll be in touch when Events intake opens late 2026. Questions in the meantime? Reach us at <a className="text-ekwa-orange underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
   return (<form onSubmit={onSubmit} className="bg-white rounded-2xl border border-ekwa-line shadow-card p-7 md:p-8 space-y-4">
     <div className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-ekwa-orange mb-2">Join the Events waitlist</div>
     <FormInput label="Your name" name="name" value={data.name} onChange={onChange} required placeholder="Dr. Jane Smith"/>
@@ -324,7 +344,8 @@ const EventsWaitlistForm=()=>{
     <FormSelect label="Industry" name="industry" value={data.industry} onChange={onChange} required options={['Dental','Aesthetic / MedSpa','Dermatology / Plastic Surgery','Veterinary','Other Healthcare']}/>
     <FormTextarea label="Topics you'd want covered (optional)" name="topics" value={data.topics} onChange={onChange} placeholder="e.g. PPO negotiation, scaling a multi-location practice, hiring associates…" rows={3}/>
     <FormCheckbox label="I'm currently an Ekwa partner" name="isPartner" checked={data.isPartner} onChange={onChange}/>
-    <div className="pt-2"><SubmitButton>Join the Waitlist</SubmitButton></div>
+    {error&&<p className="font-display text-[0.82rem] text-red-600 leading-relaxed">{error}</p>}
+    <div className="pt-2"><SubmitButton disabled={submitting}>{submitting?'Joining…':'Join the Waitlist'}</SubmitButton></div>
     <p className="font-display text-[0.78rem] text-ekwa-ink/45 leading-relaxed">No spam. We'll email you once when Events intake opens.</p>
   </form>);
 };
@@ -460,15 +481,23 @@ const ServicesSignupForm=()=>{
   const SERVICES=['Done-For-You Podcast — $499/mo','Website Starter — $499 + $99/mo','Website Pro — $899 + $199/mo','Authority Bundle — $0 build + $749/mo','Not sure yet — let\'s talk'];
   const [data,setData]=useState({name:'',email:'',practice:'',phone:'',services:[],isPartner:'',timing:'',notes:''});
   const [submitted,setSubmitted]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+  const [error,setError]=useState('');
   const onChange=(e)=>{const {name,value}=e.target;setData({...data,[name]:value});};
   const toggleService=(svc)=>{setData({...data,services:data.services.includes(svc)?data.services.filter(s=>s!==svc):[...data.services,svc]});};
-  const onSubmit=(e)=>{
+  const onSubmit=async(e)=>{
     e.preventDefault();
-    const fields={Name:data.name,Email:data.email,Phone:data.phone,'Practice / Business':data.practice,'Interested in':data.services,'Current Ekwa partner':data.isPartner,'Best time to talk':data.timing,'Notes / questions':data.notes};
-    window.location.href=buildMailto('partnerservices@ekwa.com','Partner Services Inquiry',fields);
-    setSubmitted(true);
+    setSubmitting(true);setError('');
+    try{
+      await submitToSheet('inquiry',data);
+      setSubmitted(true);
+    }catch(err){
+      setError("We couldn't send your inquiry. Please email us directly at partnerservices@ekwa.com.");
+    }finally{
+      setSubmitting(false);
+    }
   };
-  if(submitted) return (<div className="bg-white/[0.04] border border-white/15 rounded-2xl p-10 md:p-14 text-center max-w-[640px] mx-auto"><div className="w-16 h-16 mx-auto mb-6 rounded-full bg-ekwa-amber/20 flex items-center justify-center"><Check className="w-8 h-8 text-ekwa-amber" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.7rem] text-white mb-4">Thanks — we'll be in touch.</h3><p className="text-white/65 text-[1rem] leading-relaxed">Your email client should have opened with your inquiry pre-filled. Hit send and the Partner Services team will reply within one business day. If your email client didn't open, drop us a line directly at <a className="text-ekwa-amber underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
+  if(submitted) return (<div className="bg-white/[0.04] border border-white/15 rounded-2xl p-10 md:p-14 text-center max-w-[640px] mx-auto"><div className="w-16 h-16 mx-auto mb-6 rounded-full bg-ekwa-amber/20 flex items-center justify-center"><Check className="w-8 h-8 text-ekwa-amber" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.7rem] text-white mb-4">Thanks — we'll be in touch.</h3><p className="text-white/65 text-[1rem] leading-relaxed">We've received your inquiry and the Partner Services team will reply within one business day. Prefer email? Reach us directly at <a className="text-ekwa-amber underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
   return (<form onSubmit={onSubmit} className="bg-white/[0.04] border border-white/15 rounded-2xl p-7 md:p-10 max-w-[760px] mx-auto">
     <div className="grid sm:grid-cols-2 gap-4 mb-4">
       <FormInput light label="Your name" name="name" value={data.name} onChange={onChange} required placeholder="Dr. Jane Smith"/>
@@ -491,8 +520,9 @@ const ServicesSignupForm=()=>{
     <div className="mb-6">
       <FormTextarea light label="Notes or questions (optional)" name="notes" value={data.notes} onChange={onChange} placeholder="Anything you want us to know before we reach out…" rows={3}/>
     </div>
+    {error&&<p className="font-display text-[0.84rem] text-red-300 mb-4">{error}</p>}
     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-      <SubmitButton>Send my inquiry</SubmitButton>
+      <SubmitButton disabled={submitting}>{submitting?'Sending…':'Send my inquiry'}</SubmitButton>
       <span className="font-display text-[0.84rem] text-white/55">We reply within one business day.</span>
     </div>
   </form>);
