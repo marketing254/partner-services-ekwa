@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ekwa Partner Services | partnerservices.ekwa.com</title>
 <meta name="description" content="Done-for-you Podcasts and Websites for Ekwa partners — built by the team behind The Thriving Dentist Show, Less Insurance Dependence, Insurance Untangled, Business of Aesthetics, the Veterinary Business Podcast and The Stress-Free Dentist Show. Done-for-you Events coming soon." />
-<link rel="icon" type="image/png" href="https://www.ekwa.com/wp-content/uploads/2025/03/favicon-1.png" />
+<link rel="icon" type="image/png" href="assets/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Inter+Tight:wght@500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
@@ -75,9 +75,9 @@ const Handshake=(p)=><Icon {...p}><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m
 const Clock=(p)=><Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></Icon>;
 
 const PODCASTS=[
-  {id:'thriving',name:'The Thriving Dentist Show',logo:'https://www.thrivingdentist.com/wp-content/uploads/2021/04/logo.png',site:'https://www.thrivingdentist.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'Dental Practice Owners',description:"The #1 dental podcast on iTunes & Google Play with listeners in 184 countries — produced continuously by the Ekwa team since 2012.",stat:{label:'Episodes',value:'749+'},tileClass:'tile-thriving',badge:null},
+  {id:'thriving',name:'The Thriving Dentist Show',logo:'assets/thriving-dentist-logo.png',site:'https://www.thrivingdentist.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'Dental Practice Owners',description:"The #1 dental podcast on iTunes & Google Play with listeners in 184 countries — produced continuously by the Ekwa team since 2012.",stat:{label:'Episodes',value:'749+'},tileClass:'tile-thriving',badge:null},
   {id:'sfd',name:'The Stress-Free Dentist Show',logo:'https://www.thestressfreedentist.com/wp-content/themes/ekwa/images/logo.png',site:'https://www.thestressfreedentist.com/',hosts:'Dr. Eric Block · Acton, Massachusetts',audience:'Dental · Practice Wellness',description:"Active Ekwa-produced Done-For-You podcast for Dr. Eric Block — the working proof of this exact service. Same team, same workflow, your name on the cover.",stat:{label:'Status',value:'Active DFY'},tileClass:'tile-sfd',badge:'Live DFY Client'},
-  {id:'lid',name:'Less Insurance Dependence',logo:'https://www.lessinsurancedependence.com/wp-content/themes/lidekwa/images/logo.png',site:'https://www.lessinsurancedependence.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'PPO-Heavy Practices',description:'The reference podcast for dentists ready to reduce insurance dependency and rebuild profitability — 391+ episodes and counting.',stat:{label:'Episodes',value:'391+'},tileClass:'tile-lid',badge:null},
+  {id:'lid',name:'Less Insurance Dependence',logo:'assets/less-insurance-dependence-logo.png',site:'https://www.lessinsurancedependence.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'PPO-Heavy Practices',description:'The reference podcast for dentists ready to reduce insurance dependency and rebuild profitability — 391+ episodes and counting.',stat:{label:'Episodes',value:'391+'},tileClass:'tile-lid',badge:null},
   {id:'iu',name:'Insurance Untangled',logo:'https://www.insuranceuntangled.com/images/logo.png',site:'https://www.insuranceuntangled.com/',hosts:'Ben Tuinei, Jordon Comstock & Naren Arulrajah',audience:'Dental · PPO Negotiation',description:'Founded in 2023 with PPO-negotiation authority Ben Tuinei. Weekly episodes on insurance strategy, fee schedules, and going out-of-network the right way.',stat:{label:'Episodes',value:'137+'},tileClass:'tile-iu',badge:null},
   {id:'boa',name:'Business of Aesthetics',logo:'https://www.businessofaesthetics.org/wp-content/themes/ekwa/images/logo.png',site:'https://www.businessofaesthetics.org/',hosts:'Naren Arulrajah & Jeffrey Richmond',audience:'Dermatology · Plastic Surgery · MedSpa',description:'A community of 3.7K+ aesthetic professionals around a weekly podcast featuring dermatologists, plastic surgeons, and med-spa leaders — produced end-to-end by Ekwa.',stat:{label:'Episodes',value:'281+'},tileClass:'tile-boa',badge:null},
   {id:'vbi',name:'Veterinary Business Podcast',logo:'https://www.veterinarybusinessinstitute.com/wp-content/themes/ekwa/images/logo.svg',logoNoFilter:true,site:'https://www.veterinarybusinessinstitute.com/',hosts:'Veterinary Business Institute',audience:'Veterinary Practice Owners',description:"The veterinary industry's home for business education — practice management, financial planning and marketing strategy for veterinarians.",stat:{label:'Topics',value:'Practice growth'},tileClass:'tile-vbi',badge:null},
@@ -137,7 +137,7 @@ const Navbar=()=>{
   return (<header className={`sticky top-0 z-50 transition-colors duration-200 border-b ${scrolled?'bg-white border-ekwa-line shadow-sm':'bg-white border-transparent'}`}>
     <Container className="flex items-center justify-between py-4">
       <a href="https://www.ekwa.com" className="flex items-center gap-3">
-        <img src="https://www.ekwa.com/wp-content/uploads/2025/03/logo.png" alt="Ekwa Marketing" className="h-10 w-auto"/>
+        <img src="assets/ekwa-logo.png" alt="Ekwa Marketing" className="h-10 w-auto"/>
         <span className="hidden md:inline-flex font-display text-[0.72rem] font-semibold text-ekwa-ink/55 uppercase tracking-[0.14em] pl-3 border-l border-ekwa-line">Partner Services</span>
       </a>
       <nav className="hidden lg:flex items-center gap-8 font-display text-[0.94rem] font-medium text-ekwa-ink/85">
@@ -551,7 +551,7 @@ const FinalCTA=()=>(<section id="start" className="relative py-28 md:py-36 bg-ek
 const Footer=()=>(<footer className="bg-[#050d1a] text-white/65 pt-20 pb-10 font-display text-sm"><Container>
   <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 pb-14 border-b border-white/10">
     <div>
-      <img src="https://www.ekwa.com/wp-content/uploads/2025/03/logo.png" alt="Ekwa Marketing" className="h-10 w-auto brightness-0 invert mb-5"/>
+      <img src="assets/ekwa-logo.png" alt="Ekwa Marketing" className="h-10 w-auto brightness-0 invert mb-5"/>
       <p className="text-white/55 leading-relaxed max-w-[320px]">A done-for-you digital marketing company for healthcare practices. Ekwa Partner Services is a productized growth service at <a href="https://partnerservices.ekwa.com" className="text-ekwa-amber hover:underline">partnerservices.ekwa.com</a> — built for Ekwa partners.</p>
       <div className="mt-6 text-white/50 leading-relaxed">303 Pinetree Way<br/>Mississauga, Ontario L5G 2R4<br/>Canada</div>
     </div>
