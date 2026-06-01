@@ -100,7 +100,7 @@ const SubmitButton=({children,light,disabled})=>(<motion.button type="submit" di
 // ── Form submission ────────────────────────────────────────────────────────
 // Submissions POST to a Google Apps Script Web App, which writes a row to the
 // Google Sheet and emails the team. Paste your deployed /exec URL below.
-const SHEET_ENDPOINT='PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+const SHEET_ENDPOINT='https://script.google.com/macros/s/AKfycbyL9vL7_QotT96CEMOduJ9YaU1EIPUSD-AWPsLoefXsjyD0wDkhwghT157diR2IZ57y/exec';
 
 // Posts the form to the Sheet. Uses text/plain so the browser treats it as a
 // "simple" request (no CORS preflight, which Apps Script can't answer).
