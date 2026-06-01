@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ekwa Partner Services | partnerservices.ekwa.com</title>
+<meta name="description" content="Done-for-you Podcasts and Websites for Ekwa partners — built by the team behind The Thriving Dentist Show, Less Insurance Dependence, Insurance Untangled, Business of Aesthetics, the Veterinary Business Podcast and The Stress-Free Dentist Show. Done-for-you Events coming soon." />
+<link rel="icon" type="image/png" href="https://www.ekwa.com/wp-content/uploads/2025/03/favicon-1.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Inter+Tight:wght@500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{ekwa:{blue:'#0E4D87','blue-dark':'#0a3a64','blue-deep':'#062745',ink:'#0B1F36',orange:'#F39200','orange-dark':'#d57e00',amber:'#F6AE2D',cream:'#FFF8EF',stone:'#F7F4EE',mist:'#F3F6FA',line:'#E5E1D8'}},fontFamily:{sans:['Inter','system-ui','sans-serif'],display:['Inter Tight','Inter','sans-serif'],serif:['Fraunces','Georgia','serif']},boxShadow:{'card':'0 1px 2px rgba(11,31,54,0.04), 0 8px 24px rgba(11,31,54,0.06)','card-lg':'0 4px 8px rgba(11,31,54,0.05), 0 24px 48px rgba(11,31,54,0.12)','cta':'0 8px 20px rgba(243,146,0,0.35)','cta-hover':'0 14px 28px rgba(243,146,0,0.45)','cover':'0 2px 4px rgba(0,0,0,0.05), 0 12px 32px rgba(11,31,54,0.14), 0 36px 80px rgba(11,31,54,0.18)'}}}}
+</script>
+<style>
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:#0B1F36;text-rendering:optimizeSpeed}
+.font-serif{font-family:'Fraunces',Georgia,serif;font-variation-settings:"opsz" 144}
+.font-display{font-family:'Inter Tight','Inter',sans-serif;letter-spacing:-0.015em}
+/* Grain: lightweight version — no mix-blend-mode (avoids whole-page compositing on scroll), low opacity, own GPU layer */
+.grain::before{content:'';position:absolute;inset:0;opacity:0.08;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");transform:translateZ(0);will-change:transform;contain:strict}
+/* Sticky navbar gets its own compositing layer for smooth scroll */
+header[class*="sticky"]{transform:translateZ(0);will-change:transform;backface-visibility:hidden}
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;animation-iteration-count:1 !important}
+}
+.hero-bg{background:radial-gradient(ellipse 1100px 600px at 100% 0%,rgba(246,174,45,0.12) 0%,transparent 60%),radial-gradient(ellipse 900px 500px at -10% 100%,rgba(14,77,135,0.06) 0%,transparent 60%),linear-gradient(180deg,#fff 0%,#FFF8EF 100%)}
+.tile-thriving{background:linear-gradient(160deg,#1a3a5c 0%,#2a5c92 100%)}
+.tile-lid{background:linear-gradient(160deg,#7A1F2E 0%,#A82E40 100%)}
+.tile-iu{background:linear-gradient(160deg,#16263d 0%,#1f3c66 100%)}
+.tile-boa{background:linear-gradient(160deg,#1F2A44 0%,#354766 100%)}
+.tile-vbi{background:linear-gradient(160deg,#1f4d3a 0%,#2f7a57 100%)}
+.tile-sfd{background:linear-gradient(160deg,#1a4f5c 0%,#2a8595 100%)}
+*:focus-visible{outline:2px solid #F39200;outline-offset:3px;border-radius:4px}
+.logo-on-dark{filter:brightness(0) invert(1)}
+::selection{background:#F39200;color:#fff}
+</style>
+</head>
+<body class="bg-white antialiased">
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" data-presets="env,react">
+const {useState,useEffect}=React;
+const FM=window.Motion||window.framerMotion;
+const {motion,AnimatePresence}=FM;
+
+const Icon=({children,className="w-5 h-5",stroke=1.75})=>(<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>);
+const ArrowRight=(p)=><Icon {...p}><path d="M5 12h14M13 5l7 7-7 7"/></Icon>;
+const Phone=(p)=><Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></Icon>;
+const Mic=(p)=><Icon {...p}><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></Icon>;
+const Monitor=(p)=><Icon {...p}><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></Icon>;
+const Users=(p)=><Icon {...p}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></Icon>;
+const Sparkles=(p)=><Icon {...p}><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></Icon>;
+const Check=(p)=><Icon {...p}><path d="M5 13l4 4L19 7"/></Icon>;
+const Star=(p)=><Icon {...p}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></Icon>;
+const Globe=(p)=><Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></Icon>;
+const BookOpen=(p)=><Icon {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>;
+const Newspaper=(p)=><Icon {...p}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></Icon>;
+const Search=(p)=><Icon {...p}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></Icon>;
+const Building=(p)=><Icon {...p}><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></Icon>;
+const Mail=(p)=><Icon {...p}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></Icon>;
+const Calendar=(p)=><Icon {...p}><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></Icon>;
+const Plus=(p)=><Icon {...p}><path d="M12 5v14M5 12h14"/></Icon>;
+const Quote=(p)=><Icon {...p}><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zM15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 .985 0 1 0 1 1v1c0 1-1 2-2 2-1.015 0-1 .009-1 1.031V20c0 1 0 1 1 1z"/></Icon>;
+const Headphones=(p)=><Icon {...p}><path d="M3 18v-6a9 9 0 0 1 18 0v6"/></Icon>;
+const Zap=(p)=><Icon {...p}><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></Icon>;
+const Shield=(p)=><Icon {...p}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></Icon>;
+const Handshake=(p)=><Icon {...p}><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></Icon>;
+const Clock=(p)=><Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></Icon>;
+
+const PODCASTS=[
+  {id:'thriving',name:'The Thriving Dentist Show',logo:'https://www.thrivingdentist.com/wp-content/uploads/2021/04/logo.png',site:'https://www.thrivingdentist.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'Dental Practice Owners',description:"The #1 dental podcast on iTunes & Google Play with listeners in 184 countries — produced continuously by the Ekwa team since 2012.",stat:{label:'Episodes',value:'749+'},tileClass:'tile-thriving',badge:null},
+  {id:'sfd',name:'The Stress-Free Dentist Show',logo:'https://www.thestressfreedentist.com/wp-content/themes/ekwa/images/logo.png',site:'https://www.thestressfreedentist.com/',hosts:'Dr. Eric Block · Acton, Massachusetts',audience:'Dental · Practice Wellness',description:"Active Ekwa-produced Done-For-You podcast for Dr. Eric Block — the working proof of this exact service. Same team, same workflow, your name on the cover.",stat:{label:'Status',value:'Active DFY'},tileClass:'tile-sfd',badge:'Live DFY Client'},
+  {id:'lid',name:'Less Insurance Dependence',logo:'https://www.lessinsurancedependence.com/wp-content/themes/lidekwa/images/logo.png',site:'https://www.lessinsurancedependence.com/',hosts:'Gary Takacs & Naren Arulrajah',audience:'PPO-Heavy Practices',description:'The reference podcast for dentists ready to reduce insurance dependency and rebuild profitability — 391+ episodes and counting.',stat:{label:'Episodes',value:'391+'},tileClass:'tile-lid',badge:null},
+  {id:'iu',name:'Insurance Untangled',logo:'https://www.insuranceuntangled.com/images/logo.png',site:'https://www.insuranceuntangled.com/',hosts:'Ben Tuinei, Jordon Comstock & Naren Arulrajah',audience:'Dental · PPO Negotiation',description:'Founded in 2023 with PPO-negotiation authority Ben Tuinei. Weekly episodes on insurance strategy, fee schedules, and going out-of-network the right way.',stat:{label:'Episodes',value:'137+'},tileClass:'tile-iu',badge:null},
+  {id:'boa',name:'Business of Aesthetics',logo:'https://www.businessofaesthetics.org/wp-content/themes/ekwa/images/logo.png',site:'https://www.businessofaesthetics.org/',hosts:'Naren Arulrajah & Jeffrey Richmond',audience:'Dermatology · Plastic Surgery · MedSpa',description:'A community of 3.7K+ aesthetic professionals around a weekly podcast featuring dermatologists, plastic surgeons, and med-spa leaders — produced end-to-end by Ekwa.',stat:{label:'Episodes',value:'281+'},tileClass:'tile-boa',badge:null},
+  {id:'vbi',name:'Veterinary Business Podcast',logo:'https://www.veterinarybusinessinstitute.com/wp-content/themes/ekwa/images/logo.svg',logoNoFilter:true,site:'https://www.veterinarybusinessinstitute.com/',hosts:'Veterinary Business Institute',audience:'Veterinary Practice Owners',description:"The veterinary industry's home for business education — practice management, financial planning and marketing strategy for veterinarians.",stat:{label:'Topics',value:'Practice growth'},tileClass:'tile-vbi',badge:null},
+];
+
+const Container=({children,className=''})=>(<div className={`max-w-[1240px] mx-auto px-6 md:px-8 ${className}`}>{children}</div>);
+const Eyebrow=({children,light=false})=>(<span className={`inline-flex items-center gap-3 font-display text-xs font-semibold uppercase tracking-[0.18em] ${light?'text-ekwa-amber':'text-ekwa-orange'}`}><span className={`w-6 h-px ${light?'bg-ekwa-amber':'bg-ekwa-orange'}`}/>{children}</span>);
+const PrimaryButton=({href='#',children,className='',icon=true,target,rel})=>(<motion.a href={href} target={target} rel={rel} whileHover={{y:-1}} whileTap={{scale:0.98}} className={`group inline-flex items-center gap-2 bg-ekwa-orange hover:bg-ekwa-orange-dark text-white font-display font-semibold px-7 py-4 rounded-[3px] shadow-cta hover:shadow-cta-hover transition-all duration-200 ${className}`}>{children}{icon&&<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1"/>}</motion.a>);
+const GhostButton=({href='#',children,className='',light=false,target,rel})=>(<motion.a href={href} target={target} rel={rel} whileHover={{y:-1}} whileTap={{scale:0.98}} className={`inline-flex items-center gap-2 font-display font-semibold px-7 py-4 rounded-[3px] border transition-all duration-200 ${light?'text-white border-white/40 hover:bg-white hover:text-ekwa-ink hover:border-white':'text-ekwa-ink border-ekwa-ink/80 hover:bg-ekwa-ink hover:text-white'} ${className}`}>{children}</motion.a>);
+const SectionHeading=({eyebrow,title,intro,center=false,light=false,className=''})=>(<div className={`${center?'text-center mx-auto':''} max-w-[760px] ${className}`}>{eyebrow&&<Eyebrow light={light}>{eyebrow}</Eyebrow>}<h2 className={`font-serif font-medium tracking-tight mt-5 ${light?'text-white':'text-ekwa-ink'} text-[2rem] md:text-[2.6rem] lg:text-[3.1rem] leading-[1.04]`}>{title}</h2>{intro&&<p className={`mt-6 text-[1.08rem] md:text-lg leading-relaxed ${light?'text-white/75':'text-ekwa-ink/65'} ${center?'mx-auto':''}`}>{intro}</p>}</div>);
+
+// Form components
+const FieldLabel=({children,required,light})=>(<label className={`block font-display text-[0.74rem] font-semibold uppercase tracking-[0.14em] mb-2 ${light?'text-white/70':'text-ekwa-ink/60'}`}>{children}{required&&<span className="text-ekwa-orange ml-1">*</span>}</label>);
+const FormInput=({label,type='text',name,value,onChange,required,placeholder,light})=>(<div><FieldLabel required={required} light={light}>{label}</FieldLabel><input type={type} name={name} value={value} onChange={onChange} required={required} placeholder={placeholder} className={`w-full px-4 py-3 rounded-[3px] font-display text-[0.95rem] border focus:outline-none focus:ring-2 transition ${light?'bg-white/[0.06] border-white/15 text-white placeholder:text-white/35 focus:border-ekwa-amber focus:ring-ekwa-amber/20':'bg-white border-ekwa-line text-ekwa-ink placeholder:text-ekwa-ink/35 focus:border-ekwa-orange focus:ring-ekwa-orange/20'}`}/></div>);
+const FormTextarea=({label,name,value,onChange,required,placeholder,light,rows=3})=>(<div><FieldLabel required={required} light={light}>{label}</FieldLabel><textarea name={name} value={value} onChange={onChange} required={required} placeholder={placeholder} rows={rows} className={`w-full px-4 py-3 rounded-[3px] font-display text-[0.95rem] border focus:outline-none focus:ring-2 transition resize-none ${light?'bg-white/[0.06] border-white/15 text-white placeholder:text-white/35 focus:border-ekwa-amber focus:ring-ekwa-amber/20':'bg-white border-ekwa-line text-ekwa-ink placeholder:text-ekwa-ink/35 focus:border-ekwa-orange focus:ring-ekwa-orange/20'}`}/></div>);
+const FormSelect=({label,name,value,onChange,required,options,light,placeholder='Choose one…'})=>(<div><FieldLabel required={required} light={light}>{label}</FieldLabel><select name={name} value={value} onChange={onChange} required={required} className={`w-full px-4 py-3 rounded-[3px] font-display text-[0.95rem] border focus:outline-none focus:ring-2 transition ${light?'bg-white/[0.06] border-white/15 text-white focus:border-ekwa-amber focus:ring-ekwa-amber/20':'bg-white border-ekwa-line text-ekwa-ink focus:border-ekwa-orange focus:ring-ekwa-orange/20'}`}><option value="" disabled className="text-ekwa-ink">{placeholder}</option>{options.map(o=>(<option key={o} value={o} className="text-ekwa-ink">{o}</option>))}</select></div>);
+const FormCheckbox=({label,name,checked,onChange,light})=>(<label className={`flex items-start gap-3 cursor-pointer font-display text-[0.93rem] leading-snug ${light?'text-white/80':'text-ekwa-ink/75'}`}><input type="checkbox" name={name} checked={checked} onChange={onChange} className="mt-1 w-4 h-4 accent-ekwa-orange flex-shrink-0"/><span>{label}</span></label>);
+const SubmitButton=({children,light,disabled})=>(<motion.button type="submit" disabled={disabled} whileHover={{y:disabled?0:-1}} whileTap={{scale:disabled?1:0.98}} className={`group inline-flex items-center justify-center gap-2 bg-ekwa-orange hover:bg-ekwa-orange-dark text-white font-display font-semibold px-7 py-4 rounded-[3px] shadow-cta hover:shadow-cta-hover transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed`}>{children}<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1"/></motion.button>);
+
+// Mailto submission helper — works without backend.
+// To swap to a real endpoint (HubSpot, Formspree, etc.), replace mailto with a fetch() to your form-handler URL.
+const buildMailto=(to,subject,fields)=>{
+  const body=Object.entries(fields).filter(([_,v])=>v!==''&&v!==false&&!(Array.isArray(v)&&v.length===0)).map(([k,v])=>`${k}: ${Array.isArray(v)?v.join(', '):v}`).join('\n');
+  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+};
+
+const TopBar=()=>(<div className="hidden lg:block bg-ekwa-ink text-white/85 text-xs font-display"><Container className="flex items-center justify-end gap-8 py-2.5"><a href="tel:+18553450593" className="flex items-center gap-2 hover:text-white transition"><Phone className="w-3.5 h-3.5 text-ekwa-amber"/> <span>Not a Client: <strong className="text-white">855-345-0593</strong></span></a><a href="tel:+18559711519" className="flex items-center gap-2 hover:text-white transition"><Phone className="w-3.5 h-3.5 text-ekwa-amber"/> <span>Launch Stage: <strong className="text-white">855-971-1519</strong></span></a><a href="tel:+18559700574" className="flex items-center gap-2 hover:text-white transition"><Phone className="w-3.5 h-3.5 text-ekwa-amber"/> <span>Marketing Stage: <strong className="text-white">855-970-0574</strong></span></a></Container></div>);
+
+const Navbar=()=>{
+  const [scrolled,setScrolled]=useState(false);
+  useEffect(()=>{
+    let ticking=false;
+    const onS=()=>{
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          setScrolled(window.scrollY>12);
+          ticking=false;
+        });
+        ticking=true;
+      }
+    };
+    window.addEventListener('scroll',onS,{passive:true});
+    return ()=>window.removeEventListener('scroll',onS);
+  },[]);
+  return (<header className={`sticky top-0 z-50 transition-colors duration-200 border-b ${scrolled?'bg-white border-ekwa-line shadow-sm':'bg-white border-transparent'}`}>
+    <Container className="flex items-center justify-between py-4">
+      <a href="https://www.ekwa.com" className="flex items-center gap-3">
+        <img src="https://www.ekwa.com/wp-content/uploads/2025/03/logo.png" alt="Ekwa Marketing" className="h-10 w-auto"/>
+        <span className="hidden md:inline-flex font-display text-[0.72rem] font-semibold text-ekwa-ink/55 uppercase tracking-[0.14em] pl-3 border-l border-ekwa-line">Partner Services</span>
+      </a>
+      <nav className="hidden lg:flex items-center gap-8 font-display text-[0.94rem] font-medium text-ekwa-ink/85">
+        <a href="#ecosystem" className="hover:text-ekwa-orange transition">Media Ecosystem</a>
+        <a href="#services" className="hover:text-ekwa-orange transition">Services</a>
+        <a href="#pricing" className="hover:text-ekwa-orange transition">Pricing</a>
+        <a href="#authority" className="hover:text-ekwa-orange transition">Authority</a>
+        <a href="#faq" className="hover:text-ekwa-orange transition">FAQ</a>
+        <PrimaryButton href="#start" className="!py-2.5 !px-5 !text-sm">Reserve Your Spot</PrimaryButton>
+      </nav>
+    </Container>
+  </header>);
+};
+
+const HeroCover=({pod,style,delay=0})=>(<motion.div initial={{opacity:0,y:30,scale:0.94}} animate={{opacity:1,y:0,scale:1}} transition={{duration:0.7,delay,ease:[0.16,1,0.3,1]}} whileHover={{scale:1.05,zIndex:30}} style={style} className={`absolute rounded-md shadow-cover overflow-hidden ${pod.tileClass}`}>
+  <div className="absolute inset-0 grain"/>
+  <div className="absolute inset-0 flex flex-col justify-between p-4">
+    <div className="flex items-start justify-between text-white/70">
+      <span className="font-display text-[0.62rem] font-semibold uppercase tracking-[0.18em]">{pod.audience.split('·')[0].trim()}</span>
+      <Headphones className="w-4 h-4 opacity-60"/>
+    </div>
+    <div className="flex items-center justify-center flex-1">
+      <img src={pod.logo} alt={pod.name} className={`max-w-[78%] max-h-[60%] object-contain ${pod.logoNoFilter?'':'logo-on-dark'}`}/>
+    </div>
+  </div>
+</motion.div>);
+
+const Hero=()=>(<section className="relative hero-bg overflow-hidden pt-20 pb-28 md:pt-28 md:pb-36">
+  <Container className="relative">
+    <div className="grid lg:grid-cols-[1.3fr_1fr] gap-16 lg:gap-12 items-center">
+      <div>
+        <Eyebrow>Built for Ekwa partners</Eyebrow>
+        <motion.h1 initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.7,delay:0.1,ease:[0.16,1,0.3,1]}} className="font-serif font-medium text-[2.6rem] md:text-[3.6rem] lg:text-[4.4rem] leading-[0.98] tracking-tight text-ekwa-ink mt-6">
+          A done-for-you podcast and website, from the team behind <span className="italic text-ekwa-orange font-medium">the shows you already <span className="relative inline-block">know.<span className="absolute -bottom-1 left-0 right-0 h-3 bg-ekwa-amber/40 -z-10 rounded"></span></span></span>
+        </motion.h1>
+        <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.7,delay:0.2}} className="mt-8 text-lg md:text-[1.18rem] text-ekwa-ink/65 leading-relaxed max-w-[560px]">
+          Ekwa Partner Services is built for Ekwa partners. Two services at launch — a Done-For-You Podcast from the same team that produces <em className="font-serif italic text-ekwa-blue">The Thriving Dentist Show, Less Insurance Dependence, Insurance Untangled, Business of Aesthetics, the Veterinary Business Podcast</em> and <em className="font-serif italic text-ekwa-blue">The Stress-Free Dentist Show</em>; and a Done-For-You Website from the team behind 850+ practice sites. Expert-panel Events launch later in 2026.
+        </motion.p>
+        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.7,delay:0.3}} className="mt-10 flex flex-wrap items-center gap-4">
+          <PrimaryButton href="#start">Talk to Your Ekwa Lead</PrimaryButton>
+          <GhostButton href="#services">See What's Included</GhostButton>
+          <div className="flex items-center gap-2 ml-2 font-display text-sm text-ekwa-ink/60">
+            <span className="flex"><Star className="w-4 h-4 fill-ekwa-orange text-ekwa-orange"/><Star className="w-4 h-4 fill-ekwa-orange text-ekwa-orange"/><Star className="w-4 h-4 fill-ekwa-orange text-ekwa-orange"/><Star className="w-4 h-4 fill-ekwa-orange text-ekwa-orange"/><Star className="w-4 h-4 fill-ekwa-orange text-ekwa-orange"/></span>
+            <span className="hidden md:inline">95% partner retention since 2008</span>
+          </div>
+        </motion.div>
+      </div>
+      <div className="relative h-[480px] md:h-[520px] mx-auto w-full max-w-[520px]">
+        <HeroCover pod={PODCASTS[0]} delay={0.30} style={{width:260,height:260,left:'24%',top:0,transform:'rotate(-6deg)',zIndex:5}}/>
+        <HeroCover pod={PODCASTS[1]} delay={0.40} style={{width:210,height:210,left:'-4%',top:130,transform:'rotate(4deg)',zIndex:3}}/>
+        <HeroCover pod={PODCASTS[2]} delay={0.50} style={{width:210,height:210,right:0,top:100,transform:'rotate(6deg)',zIndex:3}}/>
+        <HeroCover pod={PODCASTS[3]} delay={0.60} style={{width:195,height:195,left:'12%',bottom:0,transform:'rotate(-4deg)',zIndex:2}}/>
+        <HeroCover pod={PODCASTS[4]} delay={0.70} style={{width:195,height:195,right:'6%',bottom:18,transform:'rotate(5deg)',zIndex:2}}/>
+      </div>
+    </div>
+  </Container>
+</section>);
+
+const TrustStrip=()=>(<div className="relative bg-ekwa-ink text-white grain"><Container className="relative grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 py-10">
+  {[{num:'16+',label:'Years building authority for doctors',sub:'Since 2008'},{num:'850+',label:'Practice websites shipped',sub:'Dental · Aesthetic · Veterinary'},{num:'6',label:'Industry-leading podcasts produced',sub:'See the ecosystem below'},{num:'95%',label:'Partner retention year over year',sub:'Same standard, every service'}].map((s,i)=>(
+    <motion.div key={i} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5,delay:i*0.1}} className={`px-2 ${i>0?'md:border-l border-white/10':''}`}>
+      <div className="font-serif text-[2.6rem] md:text-[3rem] leading-none font-medium tracking-tight">{s.num.split('+')[0]}<span className="text-ekwa-amber italic">{s.num.includes('+')?'+':''}</span></div>
+      <div className="font-display text-[0.86rem] text-white/75 mt-2 leading-snug">{s.label}</div>
+      <div className="font-display text-[0.74rem] text-white/40 mt-1 uppercase tracking-wider">{s.sub}</div>
+    </motion.div>))}
+</Container></div>);
+
+const ProgramIntro=()=>(<section className="py-24 md:py-32"><Container>
+  <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 items-start">
+    <div className="lg:sticky lg:top-32">
+      <Eyebrow>The offering</Eyebrow>
+      <h2 className="font-serif font-medium text-[2rem] md:text-[2.6rem] leading-[1.05] mt-5 text-ekwa-ink">A growth add-on for the partners <span className="italic text-ekwa-orange">who already know us</span>.</h2>
+    </div>
+    <div className="space-y-6 text-[1.05rem] leading-relaxed text-ekwa-ink/70">
+      <p>For 16+ years Ekwa has run full-service digital marketing for healthcare practices — SEO, paid media, content, automation, the entire engine. <strong className="text-ekwa-ink">Ekwa Partner Services</strong> is something different.</p>
+      <p>It's a focused, productized set of services for Ekwa partners — a Done-For-You Podcast, a Done-For-You Website, and (later in 2026) Done-For-You expert-panel Events. Same team. Same standards. A flat monthly commitment that sits alongside your main Ekwa engagement.</p>
+      <p>You get the production crew behind <em className="font-serif italic text-ekwa-blue">The Thriving Dentist Show, The Stress-Free Dentist Show, Less Insurance Dependence, Insurance Untangled, Business of Aesthetics</em> and <em className="font-serif italic text-ekwa-blue">the Veterinary Business Podcast</em>, and the design team behind 850+ practice websites — running cleanly under the same brand and contact you already trust.</p>
+      <div className="flex flex-wrap gap-3 pt-4">{['Built for Ekwa partners','The same team you already trust','Podcast — 2 eps a month','Website — Starter or Pro','Bundle for full lift-off','Events coming late 2026'].map(t=>(<span key={t} className="font-display text-sm font-medium px-4 py-2 bg-ekwa-cream text-ekwa-ink border border-ekwa-line rounded-full">{t}</span>))}</div>
+    </div>
+  </div>
+</Container></section>);
+
+const PodcastCard=({pod,index})=>(<motion.a href={pod.site} target="_blank" rel="noopener noreferrer" initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-50px'}} transition={{duration:0.6,delay:index*0.08,ease:[0.16,1,0.3,1]}} whileHover={{y:-6}} className="group block bg-white/[0.06] border border-white/10 rounded-xl overflow-hidden hover:border-ekwa-amber/40 transition-colors duration-300 relative">
+  {pod.badge&&<span className="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 bg-ekwa-amber text-ekwa-ink font-display text-[0.66rem] font-semibold uppercase tracking-[0.14em] px-2.5 py-1 rounded-full"><Zap className="w-3 h-3" stroke="2.5"/>{pod.badge}</span>}
+  <div className={`${pod.tileClass} relative aspect-[4/3] flex flex-col justify-between p-7`}>
+    <div className="absolute inset-0 grain"/>
+    <div className="flex items-start justify-between text-white/80 relative z-10">
+      <span className="font-display text-[0.7rem] font-semibold uppercase tracking-[0.16em]">{pod.audience}</span>
+      <Headphones className="w-5 h-5 opacity-70"/>
+    </div>
+    <div className="flex items-center justify-center flex-1 relative z-10">
+      <img src={pod.logo} alt={pod.name} className={`object-contain transition-transform duration-500 group-hover:scale-105 max-w-[72%] max-h-[55%] ${pod.logoNoFilter?'':'logo-on-dark'}`}/>
+    </div>
+    <div className="relative z-10 flex items-end justify-between text-white">
+      <div>
+        <div className="font-display text-[0.7rem] uppercase tracking-widest text-white/55">{pod.stat.label}</div>
+        <div className="font-serif italic text-2xl text-ekwa-amber font-medium leading-none mt-1">{pod.stat.value}</div>
+      </div>
+      <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-ekwa-amber group-hover:translate-x-1 transition-all"/>
+    </div>
+  </div>
+  <div className="p-6 bg-white/[0.02]">
+    <h3 className="font-serif font-semibold text-xl text-white leading-tight">{pod.name}</h3>
+    <div className="font-display text-sm text-white/55 mt-1">{pod.hosts}</div>
+    <p className="text-white/70 text-[0.95rem] mt-4 leading-relaxed">{pod.description}</p>
+  </div>
+</motion.a>);
+
+const MediaEcosystem=()=>(<section id="ecosystem" className="relative bg-ekwa-blue-deep text-white py-28 md:py-36 grain overflow-hidden">
+  <div className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none" style={{background:'radial-gradient(circle, rgba(246,174,45,0.10) 0%, transparent 60%)'}}/>
+  <Container className="relative">
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+      <SectionHeading light eyebrow="Proven where it counts" title={<>Six shows we already produce. <em className="font-serif italic text-ekwa-amber font-medium">Hundreds of thousands</em> of listeners. One team behind every one.</>} intro="When we say Done-For-You Podcast, this is what we mean. The Ekwa podcast team produces every episode you see below — and Dr. Eric Block's Stress-Free Dentist Show is the live, working example of this exact service."/>
+      <a href="https://www.ekwa.com/in-the-media/" target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-2 font-display text-sm font-medium text-white/70 hover:text-ekwa-amber transition border-b border-white/20 hover:border-ekwa-amber pb-1">See Ekwa in the media <ArrowRight className="w-4 h-4"/></a>
+    </div>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {PODCASTS.map((p,i)=><PodcastCard key={p.id} pod={p} index={i}/>)}
+    </div>
+  </Container>
+</section>);
+
+const ServiceCard=({number,kicker,title,intro,items,IconComp,index})=>(<motion.div initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.6,delay:index*0.1}} className="relative bg-white rounded-2xl p-9 border border-ekwa-line shadow-card hover:shadow-card-lg transition-all duration-300 overflow-hidden">
+  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-ekwa-blue via-ekwa-orange to-ekwa-amber"/>
+  <div className="absolute top-7 right-8 font-serif text-[4.5rem] italic font-medium text-ekwa-cream leading-none">{number}</div>
+  <div className="flex items-center gap-3 mb-5 relative">
+    <div className="w-11 h-11 rounded-lg bg-ekwa-cream flex items-center justify-center text-ekwa-orange"><IconComp className="w-5 h-5"/></div>
+    <div className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-ekwa-orange">{kicker}</div>
+  </div>
+  <h3 className="font-serif text-xl md:text-[1.45rem] leading-tight font-semibold mb-4 max-w-[92%]">{title}</h3>
+  <p className="text-ekwa-ink/65 mb-6 leading-relaxed text-[0.96rem]">{intro}</p>
+  <ul className="border-t border-ekwa-line space-y-0">{items.map((it,i)=>(<li key={i} className="flex items-start gap-3 py-2.5 border-b border-ekwa-line font-display text-[0.92rem] font-medium text-ekwa-ink"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-1" stroke="2.5"/><span>{it}</span></li>))}</ul>
+</motion.div>);
+
+const Services=()=>(<section id="services" className="relative py-28 md:py-36 bg-ekwa-cream grain overflow-hidden"><Container className="relative">
+  <SectionHeading eyebrow="Two services at launch" title={<>A <em className="font-serif italic text-ekwa-orange">podcast we produce</em>. A <em className="font-serif italic text-ekwa-orange">website we build</em>.</>} intro="Events arrive later in 2026. The launch lineup stays tight on purpose — so the team can deliver consistently for every partner who joins this year." className="mb-16"/>
+  <div className="grid md:grid-cols-2 gap-6">
+    <ServiceCard number="01" kicker="Done-For-You · Podcast" IconComp={Mic} index={0} title="Your podcast, produced." intro="A full publishing engine, not just an editor. Edited audio, promo videos, branded graphics, email newsletters, a dedicated episode webpage on your site, hosting, distribution, and bi-weekly performance reporting. You show up to record — we do the rest." items={['2 fully-produced episodes per month on a consistent release calendar','Professionally edited audio + 2 short promo videos per episode','3 branded social graphics per episode for LinkedIn, Facebook & Instagram','2 promotional email newsletters per episode, designed and sent to your list','Dedicated episode webpage on your site, with show notes & embedded player','Hosted, distributed everywhere, with bi-weekly performance reporting']}/>
+    <ServiceCard number="02" kicker="Done-For-You · Website" IconComp={Monitor} index={1} title="Your website, built." intro="Custom design, professional copywriting, hosting, ongoing edits. Two tiers — a 5-page Starter and a 20-page Pro — depending on how much you need to say. One-time build plus monthly maintenance ($99/mo Starter · $199/mo Pro) that keeps the site live, supported and edited." items={['Starter — 5-page custom site','Pro — 20-page custom site','Professional copywriting included','Mobile-optimized & accessible','Hosting, SSL &amp; security covered by monthly maintenance','Monthly edits by the same designer']}/>
+  </div>
+  <div className="mt-10 max-w-[760px] mx-auto text-center text-[0.92rem] text-ekwa-ink/55 font-display"><span className="inline-flex items-center gap-2"><Sparkles className="w-4 h-4 text-ekwa-orange"/> Coming late 2026: <strong className="text-ekwa-ink">Done-For-You Events</strong> — quarterly expert-panel webinars, fully produced. <a href="#events-soon" className="text-ekwa-orange hover:underline">Join the waitlist ↓</a></span></div>
+</Container></section>);
+
+const PriceCard=({kicker,name,tagline,price,regular,partner,badge,features,ctaText,ctaHref,featured=false,index})=>(<motion.div initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.6,delay:index*0.1}} className={`relative rounded-2xl p-8 md:p-9 flex flex-col h-full transition-all duration-300 ${featured?'bg-ekwa-blue-deep text-white border border-ekwa-blue-deep shadow-card-lg':'bg-white text-ekwa-ink border border-ekwa-line shadow-card hover:shadow-card-lg hover:-translate-y-1'}`}>
+  {badge&&<span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ekwa-orange text-white font-display text-xs font-semibold uppercase tracking-[0.14em] px-4 py-1.5 rounded-full whitespace-nowrap">{badge}</span>}
+  <div className={`font-display text-xs font-semibold uppercase tracking-[0.14em] mb-3 ${featured?'text-ekwa-amber':'text-ekwa-orange'}`}>{kicker}</div>
+  <h3 className="font-serif text-xl font-semibold mb-2">{name}</h3>
+  <p className={`text-[0.9rem] mb-6 min-h-[40px] leading-snug ${featured?'text-white/70':'text-ekwa-ink/65'}`}>{tagline}</p>
+  {regular&&<div className={`font-display text-[0.82rem] mb-1 ${featured?'text-white/45':'text-ekwa-ink/45'}`}>Regular price <span className="line-through">${regular}/mo</span></div>}
+  <div className="flex items-baseline gap-1 mb-1"><span className="font-serif text-xl font-medium mt-1.5">$</span><span className="font-serif text-[3rem] font-medium leading-none tracking-tight">{price}</span><span className={`font-display text-[0.9rem] font-medium ml-1 ${featured?'text-white/60':'text-ekwa-ink/55'}`}>/mo</span></div>
+  <div className={`font-display text-[0.78rem] font-semibold mt-1 ${featured?'text-ekwa-amber':'text-ekwa-orange-dark'}`}>Partner price</div>
+  {partner&&<div className={`inline-block self-start font-display text-[0.78rem] font-medium px-2.5 py-1.5 rounded-md mt-3 mb-6 border ${featured?'bg-ekwa-amber/15 text-ekwa-amber border-ekwa-amber/25':'bg-ekwa-cream text-ekwa-orange-dark border-ekwa-cream'}`}>{partner}</div>}
+  {!partner&&<div className="mb-6"/>}
+  <ul className="space-y-2.5 mb-7 flex-1">{features.map((f,i)=>(<li key={i} className="flex items-start gap-3 font-display text-[0.9rem]"><Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${featured?'text-ekwa-amber':'text-ekwa-orange'}`} stroke="2.5"/><span dangerouslySetInnerHTML={{__html:f}}/></li>))}</ul>
+  {featured?<PrimaryButton href={ctaHref} className="w-full justify-center">{ctaText}</PrimaryButton>:<GhostButton href={ctaHref} className="w-full justify-center">{ctaText}</GhostButton>}
+</motion.div>);
+
+const PriceRow=({label,regular,partner,unit,light})=>(<div className={`flex items-baseline justify-between gap-3 py-2 border-b ${light?'border-white/15':'border-ekwa-line/70'}`}><div className={`font-display text-[0.78rem] font-semibold uppercase tracking-[0.14em] ${light?'text-white/55':'text-ekwa-ink/55'}`}>{label}</div><div className="text-right"><div className="flex items-baseline gap-2 justify-end"><span className="font-serif text-[1.6rem] font-medium leading-none tracking-tight">${partner}</span><span className={`font-display text-[0.78rem] font-medium ${light?'text-white/55':'text-ekwa-ink/55'}`}>{unit}</span></div>{regular&&<div className={`font-display text-[0.74rem] mt-1 ${light?'text-white/40':'text-ekwa-ink/40'}`}>Regular <span className="line-through">${regular}{unit}</span></div>}</div></div>);
+
+const HybridPriceCard=({kicker,name,tagline,rows,features,ctaText,ctaHref,featured=false,badge,index})=>(<motion.div initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.6,delay:index*0.1}} className={`relative rounded-2xl p-8 md:p-9 flex flex-col h-full transition-all duration-300 ${featured?'bg-ekwa-blue-deep text-white border border-ekwa-blue-deep shadow-card-lg':'bg-white text-ekwa-ink border border-ekwa-line shadow-card hover:shadow-card-lg hover:-translate-y-1'}`}>
+  {badge&&<span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ekwa-orange text-white font-display text-xs font-semibold uppercase tracking-[0.14em] px-4 py-1.5 rounded-full whitespace-nowrap">{badge}</span>}
+  <div className={`font-display text-xs font-semibold uppercase tracking-[0.14em] mb-3 ${featured?'text-ekwa-amber':'text-ekwa-orange'}`}>{kicker}</div>
+  <h3 className="font-serif text-xl font-semibold mb-2">{name}</h3>
+  <p className={`text-[0.9rem] mb-5 min-h-[40px] leading-snug ${featured?'text-white/70':'text-ekwa-ink/65'}`}>{tagline}</p>
+  <div className="mb-6">{rows.map((r,i)=><PriceRow key={i} {...r} light={featured}/>)}</div>
+  <ul className="space-y-2.5 mb-7 flex-1">{features.map((f,i)=>(<li key={i} className="flex items-start gap-3 font-display text-[0.9rem]"><Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${featured?'text-ekwa-amber':'text-ekwa-orange'}`} stroke="2.5"/><span dangerouslySetInnerHTML={{__html:f}}/></li>))}</ul>
+  {featured?<PrimaryButton href={ctaHref} className="w-full justify-center">{ctaText}</PrimaryButton>:<GhostButton href={ctaHref} className="w-full justify-center">{ctaText}</GhostButton>}
+</motion.div>);
+
+const Pricing=()=>(<section id="pricing" className="py-28 md:py-36 bg-ekwa-stone relative grain"><Container className="relative">
+  <SectionHeading center eyebrow="Pricing" title={<>Partner rates on every tier. <em className="font-serif italic text-ekwa-orange">Regular pricing</em> shown for context.</>} intro="Pricing is the partner rate — for Ekwa partners. Websites are a one-time build plus required monthly maintenance (hosting, SSL, edits). The podcast is a flat monthly. Talk to your Ekwa lead for the full terms." className="mb-14"/>
+  <div className="grid md:grid-cols-3 gap-6 items-stretch mb-8">
+    <HybridPriceCard index={0} kicker="Done-For-You · Website · Starter" name="Your starter site, built." tagline="A custom 5-page site to anchor your authority online." rows={[{label:'Build (one-time)',regular:'799',partner:'499',unit:''},{label:'Ongoing maintenance',regular:'149',partner:'99',unit:'/mo'}]} features={['Custom-designed homepage + 4 inner pages','Professional copywriting included','Mobile-optimized & accessible','Monthly maintenance covers hosting, SSL & content edits','Same designer behind 850+ practice sites','Talk to your Ekwa lead to start']} ctaText="Talk to your Ekwa lead" ctaHref="#start"/>
+    <HybridPriceCard index={1} kicker="Done-For-You · Podcast" name="Your podcast, produced." tagline="2 episodes per month, produced end-to-end by the Ekwa podcast team." rows={[{label:'Monthly',regular:'749',partner:'499',unit:'/mo'}]} features={['2 fully-produced episodes per month on a consistent release calendar','Professionally edited audio + 2 short promo videos per episode','3 branded social graphics per episode for LinkedIn, Facebook &amp; Instagram','2 promotional email newsletters per episode, designed and sent to your list','Dedicated episode webpage on your site, with show notes &amp; embedded player','Hosted, distributed everywhere, with bi-weekly performance reporting']} ctaText="Talk to your Ekwa lead" ctaHref="#start"/>
+    <HybridPriceCard index={2} kicker="Done-For-You · Website · Pro" name="Your full site, built." tagline="A 20-page site for partners who need depth and breadth." rows={[{label:'Build (one-time)',regular:'1,499',partner:'899',unit:''},{label:'Ongoing maintenance',regular:'299',partner:'199',unit:'/mo'}]} features={['Custom-designed homepage + 19 inner pages','Professional copywriting across all pages','Mobile-optimized & accessible','Monthly maintenance covers hosting, SSL & content edits','Priority turnaround from the design team','Talk to your Ekwa lead to start']} ctaText="Talk to your Ekwa lead" ctaHref="#start"/>
+  </div>
+  <HybridPriceCard index={3} featured badge="Best Value · Build fee waived · One flat monthly" kicker="Authority Bundle · Podcast + Website Pro" name="The full authority engine." tagline="Podcast and 20-page Pro site, bundled into one flat monthly. No build fee. No separate maintenance line. Dedicated team across both services with cross-promotion baked in." rows={[{label:'Build (one-time)',regular:'1,499',partner:'0',unit:''},{label:'Everything · Monthly',regular:'1,199',partner:'749',unit:'/mo'}]} features={['<strong>Everything</strong> in Done-For-You Podcast (2 eps/mo, full production)','<strong>Everything</strong> in Website Pro (20-page custom build)','<strong>Build fee waived</strong> — no $899 upfront, rolled into the monthly','<strong>No separate maintenance line</strong> — hosting, SSL &amp; monthly edits included','Cross-promotion across podcast + site','Dedicated producer + designer assigned to you','Priority turnaround on both services']} ctaText="Get the Authority Bundle" ctaHref="#start"/>
+  <div className="mt-8 text-center font-display text-[0.86rem] text-ekwa-ink/55"><Sparkles className="inline w-4 h-4 text-ekwa-orange mr-1 -mt-0.5"/> Done-For-You Events launches later in 2026 — quarterly expert-panel webinars at $499/mo partner pricing. Waitlist below.</div>
+</Container></section>);
+
+const EventsWaitlistForm=()=>{
+  const [data,setData]=useState({name:'',email:'',practice:'',industry:'',topics:'',isPartner:false});
+  const [submitted,setSubmitted]=useState(false);
+  const onChange=(e)=>{const {name,value,type,checked}=e.target;setData({...data,[name]:type==='checkbox'?checked:value});};
+  const onSubmit=(e)=>{
+    e.preventDefault();
+    const fields={Name:data.name,Email:data.email,'Practice / Business':data.practice,Industry:data.industry,'Topics of interest':data.topics,'Current Ekwa partner':data.isPartner?'Yes':'No'};
+    window.location.href=buildMailto('partnerservices@ekwa.com','Events Waitlist Signup',fields);
+    setSubmitted(true);
+  };
+  if(submitted) return (<div className="bg-white rounded-2xl border border-ekwa-line shadow-card p-8 md:p-10 text-center"><div className="w-14 h-14 mx-auto mb-5 rounded-full bg-ekwa-orange/10 flex items-center justify-center"><Check className="w-7 h-7 text-ekwa-orange" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.5rem] text-ekwa-ink mb-3">You're on the list.</h3><p className="text-ekwa-ink/65 text-[0.96rem] leading-relaxed">Your email client should have opened with a pre-filled note. Hit send and we'll be in touch when Events intake opens late 2026. If your email client didn't open, drop us a line at <a className="text-ekwa-orange underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
+  return (<form onSubmit={onSubmit} className="bg-white rounded-2xl border border-ekwa-line shadow-card p-7 md:p-8 space-y-4">
+    <div className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-ekwa-orange mb-2">Join the Events waitlist</div>
+    <FormInput label="Your name" name="name" value={data.name} onChange={onChange} required placeholder="Dr. Jane Smith"/>
+    <FormInput label="Email" type="email" name="email" value={data.email} onChange={onChange} required placeholder="you@yourpractice.com"/>
+    <FormInput label="Practice or business" name="practice" value={data.practice} onChange={onChange} required placeholder="Your practice name"/>
+    <FormSelect label="Industry" name="industry" value={data.industry} onChange={onChange} required options={['Dental','Aesthetic / MedSpa','Dermatology / Plastic Surgery','Veterinary','Other Healthcare']}/>
+    <FormTextarea label="Topics you'd want covered (optional)" name="topics" value={data.topics} onChange={onChange} placeholder="e.g. PPO negotiation, scaling a multi-location practice, hiring associates…" rows={3}/>
+    <FormCheckbox label="I'm currently an Ekwa partner" name="isPartner" checked={data.isPartner} onChange={onChange}/>
+    <div className="pt-2"><SubmitButton>Join the Waitlist</SubmitButton></div>
+    <p className="font-display text-[0.78rem] text-ekwa-ink/45 leading-relaxed">No spam. We'll email you once when Events intake opens.</p>
+  </form>);
+};
+
+const EventsComingSoon=()=>(<section id="events-soon" className="py-24 md:py-28 bg-ekwa-cream relative grain overflow-hidden"><Container className="relative">
+  <div className="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-start">
+    <div>
+      <Eyebrow>Coming later in 2026</Eyebrow>
+      <h2 className="font-serif font-medium text-[2rem] md:text-[2.6rem] leading-[1.05] mt-5 text-ekwa-ink">Done-For-You <em className="italic text-ekwa-orange">Events</em> — quarterly expert-panel webinars, fully produced.</h2>
+      <p className="mt-6 text-ekwa-ink/65 text-lg leading-relaxed">The same expert-panel format we run across dental, aesthetic and veterinary verticals — packaged as a quarterly service for Ekwa partners. Speaker coordination, registration page, promo, run-of-show and replay distribution. Anchored at <strong className="text-ekwa-ink">$499/mo partner pricing</strong> when it launches.</p>
+      <div className="mt-8 font-display text-xs font-semibold uppercase tracking-[0.14em] text-ekwa-orange">What's included at launch</div>
+      <ul className="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-2.5 text-ekwa-ink/75 text-[0.93rem]">
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>1–2 hour expert panel, quarterly</span></li>
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>Panelist sourcing &amp; coordination</span></li>
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>Promo banners + QR codes</span></li>
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>Branded Zoom registration page</span></li>
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>Email invitations to your list</span></li>
+        <li className="flex items-start gap-2.5"><Check className="w-4 h-4 text-ekwa-orange flex-shrink-0 mt-0.5" stroke="2.5"/><span>Recording + replay distribution</span></li>
+      </ul>
+    </div>
+    <EventsWaitlistForm/>
+  </div>
+</Container></section>);
+
+const Authority=()=>{
+  const items=[{num:'20+',label:'Books published',sub:'Authored by Ekwa specialists',IconComp:BookOpen},{num:'10+',label:'Research reports & case studies',sub:'Original analyses',IconComp:Search},{num:'500+',label:'Articles in industry press',sub:'Across 15+ publications',IconComp:Newspaper},{num:'15+',label:'Top industry magazines',sub:'Practical Dermatology, Modern Aesthetics, Dentistry IQ & more',IconComp:Building}];
+  return (<section id="authority" className="py-28 md:py-36 bg-white relative"><Container>
+    <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 items-start">
+      <div className="lg:sticky lg:top-32">
+        <Eyebrow>Thought leadership</Eyebrow>
+        <h2 className="font-serif font-medium text-[2rem] md:text-[2.6rem] leading-[1.05] mt-5">When healthcare publications need to <em className="italic text-ekwa-orange">understand digital marketing</em>, they call Ekwa.</h2>
+        <p className="mt-6 text-ekwa-ink/65 text-lg leading-relaxed">The same people producing the podcasts above have spent over a decade writing the books, reports and feature articles the industry reads. When you take on Partner Services, you sit inside that same network.</p>
+        <div className="mt-10 p-7 bg-ekwa-mist rounded-xl border border-ekwa-line">
+          <Quote className="w-7 h-7 text-ekwa-orange mb-4"/>
+          <p className="font-serif italic text-[1.18rem] leading-snug text-ekwa-ink">Ekwa caters to a wide range of healthcare professionals — veterinarians, dentists, dermatologists, plastic surgeons, ophthalmologists, OB-GYNs, and med-spa owners. One of the most impressive achievements is a 95% client retention rate, year after year.</p>
+          <div className="mt-5 font-display text-sm"><div className="font-semibold text-ekwa-ink">Naren Arulrajah</div><div className="text-ekwa-ink/55">Founder & CEO · Ekwa Marketing</div></div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-5">{items.map((it,i)=>(<motion.div key={i} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5,delay:i*0.08}} className="bg-ekwa-cream/40 border border-ekwa-line rounded-xl p-7 hover:bg-ekwa-cream transition-colors">
+        <div className="w-11 h-11 rounded-lg bg-white border border-ekwa-line flex items-center justify-center text-ekwa-orange mb-5"><it.IconComp className="w-5 h-5"/></div>
+        <div className="font-serif text-[3rem] md:text-[3.4rem] font-medium leading-none tracking-tight text-ekwa-ink">{it.num.replace('+','')}<span className="text-ekwa-orange italic">{it.num.includes('+')?'+':''}</span></div>
+        <div className="font-display font-semibold text-ekwa-ink mt-4">{it.label}</div>
+        <div className="font-display text-[0.84rem] text-ekwa-ink/55 mt-1 leading-snug">{it.sub}</div>
+      </motion.div>))}</div>
+    </div>
+  </Container></section>);
+};
+
+const HowWeWorkTogether=()=>{
+  const pillars=[
+    {icon:Handshake,t:'12-month commitment',d:"Partner Services is built for real outcomes — a podcast that compounds, a website that earns trust over time. We ask for a 12-month commitment so we can plan production, hold the team, and actually move the needle. Most partners stay well past year one.",foot:'6-month minimum available case-by-case for partners who need a shorter runway.'},
+    {icon:Clock,t:'90-day cancellation notice',d:"If you ever need to wind things down, we ask for 90 days' notice. That window protects the work in flight — final episodes ship, the site stays supported, nothing goes dark on your audience.",foot:'Notice runs alongside any remaining commitment term.'},
+    {icon:Shield,t:'Pricing locked while you stay',d:'The partner price you sign at is the price you pay. We don\'t change rates mid-term, and we don\'t bury fees in the agreement. The number on the pricing card is the number on the invoice.',foot:'Website maintenance ($99/mo Starter · $199/mo Pro) is itemised on the invoice and never adjusted mid-term.'},
+  ];
+  return (<section id="how-we-work" className="py-24 md:py-32 bg-white">
+    <Container>
+      <div className="grid lg:grid-cols-[1fr_1.4fr] gap-14 lg:gap-20 items-start">
+        <div className="lg:sticky lg:top-32">
+          <Eyebrow>How we work together</Eyebrow>
+          <h2 className="font-serif font-medium text-[2.1rem] md:text-[2.8rem] leading-[1.05] mt-5 tracking-tight">Built for partners who want <em className="italic text-ekwa-orange">real outcomes</em> — not a trial.</h2>
+          <p className="mt-6 text-ekwa-ink/65 text-[1.05rem] leading-relaxed max-w-[480px]">A podcast compounds. A website earns authority. Neither happens in 30 days. The terms below exist so we can plan production, hold the right people on your account, and actually deliver the work you signed up for.</p>
+          <p className="mt-5 text-ekwa-ink/55 text-[0.95rem] leading-relaxed max-w-[480px]">If any of this is a deal-breaker, talk to your Ekwa lead before signing — we'd rather walk through it on a call than have it become a surprise later.</p>
+        </div>
+        <div className="space-y-5">
+          {pillars.map((p,i)=>(<motion.div key={i} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5,delay:i*0.08}} className="bg-ekwa-cream/60 border border-ekwa-line rounded-[6px] p-7 md:p-9 hover:border-ekwa-orange/40 hover:shadow-card transition-all">
+            <div className="flex items-start gap-5">
+              <div className="w-12 h-12 rounded-full bg-white border border-ekwa-line flex items-center justify-center flex-shrink-0"><p.icon className="w-5 h-5 text-ekwa-orange" stroke="2"/></div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-serif font-semibold text-[1.4rem] leading-tight mb-3">{p.t}</h3>
+                <p className="text-ekwa-ink/70 text-[1rem] leading-relaxed">{p.d}</p>
+                <div className="mt-4 pt-4 border-t border-ekwa-line/70 font-display text-[0.84rem] text-ekwa-ink/55 italic">{p.foot}</div>
+              </div>
+            </div>
+          </motion.div>))}
+          <div className="mt-8 flex flex-wrap items-center gap-3 pt-4">
+            <span className="inline-flex items-center gap-2 bg-white border border-ekwa-line rounded-full px-4 py-2 font-display text-[0.82rem] font-semibold text-ekwa-ink/70"><Check className="w-3.5 h-3.5 text-ekwa-orange" stroke="2.5"/> No setup fees</span>
+            <span className="inline-flex items-center gap-2 bg-white border border-ekwa-line rounded-full px-4 py-2 font-display text-[0.82rem] font-semibold text-ekwa-ink/70"><Check className="w-3.5 h-3.5 text-ekwa-orange" stroke="2.5"/> Partner pricing locked in writing</span>
+            <span className="inline-flex items-center gap-2 bg-white border border-ekwa-line rounded-full px-4 py-2 font-display text-[0.82rem] font-semibold text-ekwa-ink/70"><Check className="w-3.5 h-3.5 text-ekwa-orange" stroke="2.5"/> Governed by Ontario, Canada law</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>);
+};
+
+const HowItWorks=()=>{
+  const steps=[{n:'i',t:'Talk to your Ekwa lead',d:'Confirm you want Partner Services and which tier — Podcast, Website Starter, Website Pro, or the Authority Bundle. We pull the partner pricing into your existing account.'},{n:'ii',t:'Kickoff call',d:'30 minutes with your producer and/or designer. We capture topic, branding, key assets, and the recording cadence that fits your week.'},{n:'iii',t:'We build',d:'Website mock-ups within 7 days. First podcast episode produced within 2–3 weeks of your first recording. You review at every step before anything ships.'},{n:'iv',t:'Launch & iterate',d:'Site goes live, show drops on Apple and Spotify, monthly edits and new episodes keep landing. The team stays the same so the work stays consistent.'}];
+  return (<section className="py-28 md:py-36 bg-white"><Container>
+    <SectionHeading eyebrow="How it works" title={<>From <em className="italic text-ekwa-orange">"I want this"</em> to live — usually within 3 to 6 weeks of kickoff.</>} intro="Timelines vary by tier. The website is fastest. Podcasts hit a regular cadence within a month of your first recording session." className="mb-16"/>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 relative">
+      <div className="hidden lg:block absolute left-0 right-0 top-5 h-px bg-ekwa-line"/>
+      {steps.map((s,i)=>(<motion.div key={i} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5,delay:i*0.1}} className="relative z-10">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center font-serif italic font-semibold mb-5 border ${i===0?'bg-white border-ekwa-ink text-ekwa-ink':i===1?'bg-ekwa-ink border-ekwa-ink text-white':i===2?'bg-ekwa-orange border-ekwa-orange text-white':'bg-ekwa-amber border-ekwa-amber text-ekwa-ink'}`}>{s.n}</div>
+        <h4 className="font-serif font-semibold text-xl mb-2">{s.t}</h4>
+        <p className="text-ekwa-ink/65 text-[0.96rem] leading-relaxed">{s.d}</p>
+      </motion.div>))}
+    </div>
+  </Container></section>);
+};
+
+const FAQItem=({q,a,index})=>{
+  const [open,setOpen]=useState(false);
+  return (<motion.div initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.4,delay:index*0.05}} className="border-b border-ekwa-line">
+    <button onClick={()=>setOpen(!open)} className="w-full py-7 flex items-center justify-between gap-6 text-left group">
+      <span className={`font-serif text-lg md:text-xl font-semibold leading-snug transition-colors ${open?'text-ekwa-orange':'text-ekwa-ink group-hover:text-ekwa-orange'}`}>{q}</span>
+      <span className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 border transition-all ${open?'bg-ekwa-orange border-ekwa-orange text-white rotate-45':'border-ekwa-ink text-ekwa-ink'}`}><Plus className="w-4 h-4" stroke="2"/></span>
+    </button>
+    <AnimatePresence initial={false}>{open&&<motion.div initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} transition={{duration:0.3}} className="overflow-hidden"><div className="pb-7 pr-12 text-ekwa-ink/65 text-[1.04rem] leading-relaxed">{a}</div></motion.div>}</AnimatePresence>
+  </motion.div>);
+};
+
+const FAQ=()=>{
+  const faqs=[
+    {q:'Who can sign up for Ekwa Partner Services?',a:"Primarily Ekwa partners — that's who Partner Services was built for and where we focus our outreach. If you're not yet a partner but want to start a relationship with Ekwa, signing up for Partner Services makes you one. Either way, everyone who signs up gets the partner price shown on each tier; the strikethrough regular price is what this work would cost without the partner relationship."},
+    {q:"How is this different from Ekwa's flagship service?",a:"They solve different problems. The flagship Ekwa service is a full digital marketing engine for healthcare practice owners — SEO, paid media, content strategy, automation, the entire growth stack. Partner Services is a cost-effective production service for podcasts, websites, and (in Phase 2) expert-panel webinars — for any operator who needs that work done end-to-end. You don't need the flagship engagement to buy Partner Services, and you don't need Partner Services to buy the flagship engagement. They work well together; they also stand on their own."},
+    {q:'How is the website actually priced?',a:'The website is a one-time build plus required monthly maintenance. Starter is $499 one-time for a 5-page custom site, with $99/mo ongoing maintenance. Pro is $899 one-time for a 20-page site, with $199/mo ongoing maintenance. The maintenance covers hosting, SSL and monthly content edits — it\'s required, not optional, because the site needs to stay live, secure and updated.'},
+    {q:'What\'s the difference between Website Starter and Website Pro?',a:'Starter is a 5-page custom build (homepage + 4 inner pages) at $499 + $99/mo. Pro is a 20-page build (homepage + 19 inner pages) at $899 + $199/mo — more room for service pages, location pages, an about section, blog landing, etc. Both include the same level of design and copywriting; Pro maintenance is higher because there are more pages to keep updated. Pick by how much you actually have to say.'},
+    {q:'Does the Bundle save me money?',a:"Yes — and it beats DIY-assembling the two services. Standalone partner pricing for both is $899 (Pro build) plus $698/mo ($499 podcast + $199 Pro maintenance) = $9,275 in year one. The bundle is $0 build + $749/mo = $8,988 in year one — saving you $287 right away, with zero upfront. Vs. the regular non-bundle market rate of $1,199/mo, that's $450/mo saved on the monthly on top of the waived build fee."},
+    {q:'Do I need to record the podcast myself?',a:'Yes — you (and your guests, if any) provide the recording. Ekwa handles everything downstream: editing, mastering, 2 promo videos, 3 social graphics, 2 email newsletters, a dedicated episode webpage on your site, hosting, distribution, show notes, and bi-weekly stats. Most partners spend about an hour per episode on the recording itself.'},
+    {q:'When do Events become available?',a:"Later in 2026. Done-For-You Events will run quarterly expert-panel webinars — the same format Ekwa already runs across dental, aesthetic and veterinary — at $499/mo partner pricing. Join the waitlist on this page and we'll email you first when intake opens."},
+    {q:'What\'s the "regular price" shown crossed out?',a:'Every tier has a regular (non-partner) rate listed for context. The partner price below it is the actual rate you pay as an active Ekwa partner — a roughly 33–50% discount that exists because you\'re already inside the relationship.'},
+    {q:'What\'s the commitment? Can I cancel anytime?',a:<span>Partner Services runs on a 12-month commitment (6-month minimum available case-by-case) with 90 days' notice to cancel. The terms exist because podcasts and websites compound — neither pays off in 30 days, and we hold a dedicated team on your account for the full term. Full breakdown in the <a className="text-ekwa-orange underline" href="#how-we-work">How we work together</a> section above.</span>},
+    {q:'How long until everything is live?',a:'Depends on the tier. Website mock-ups within 7 days, live site in roughly 3 weeks. First podcast episode produced within 2–3 weeks of your first recording. Bundle launches stretch a bit longer because both tracks run in parallel.'},
+    {q:'Where can I see examples of websites Ekwa has built?',a:<span>Visit the <a className="text-ekwa-orange underline" href="https://designs.ekwa.com" target="_blank" rel="noopener noreferrer">Ekwa Client Portfolio</a> — 850+ live healthcare practice sites built by the same team that will build yours.</span>},
+  ];
+  return (<section id="faq" className="py-28 md:py-36 bg-ekwa-cream"><Container>
+    <SectionHeading center eyebrow="Common questions" title={<>The stuff people ask <em className="italic text-ekwa-orange">before they sign up.</em></>} className="mb-16"/>
+    <div className="max-w-[900px] mx-auto">{faqs.map((f,i)=><FAQItem key={i} {...f} index={i}/>)}</div>
+  </Container></section>);
+};
+
+const ServicesSignupForm=()=>{
+  const SERVICES=['Done-For-You Podcast — $499/mo','Website Starter — $499 + $99/mo','Website Pro — $899 + $199/mo','Authority Bundle — $0 build + $749/mo','Not sure yet — let\'s talk'];
+  const [data,setData]=useState({name:'',email:'',practice:'',phone:'',services:[],isPartner:'',timing:'',notes:''});
+  const [submitted,setSubmitted]=useState(false);
+  const onChange=(e)=>{const {name,value}=e.target;setData({...data,[name]:value});};
+  const toggleService=(svc)=>{setData({...data,services:data.services.includes(svc)?data.services.filter(s=>s!==svc):[...data.services,svc]});};
+  const onSubmit=(e)=>{
+    e.preventDefault();
+    const fields={Name:data.name,Email:data.email,Phone:data.phone,'Practice / Business':data.practice,'Interested in':data.services,'Current Ekwa partner':data.isPartner,'Best time to talk':data.timing,'Notes / questions':data.notes};
+    window.location.href=buildMailto('partnerservices@ekwa.com','Partner Services Inquiry',fields);
+    setSubmitted(true);
+  };
+  if(submitted) return (<div className="bg-white/[0.04] border border-white/15 rounded-2xl p-10 md:p-14 text-center max-w-[640px] mx-auto"><div className="w-16 h-16 mx-auto mb-6 rounded-full bg-ekwa-amber/20 flex items-center justify-center"><Check className="w-8 h-8 text-ekwa-amber" stroke="2.5"/></div><h3 className="font-serif font-semibold text-[1.7rem] text-white mb-4">Thanks — we'll be in touch.</h3><p className="text-white/65 text-[1rem] leading-relaxed">Your email client should have opened with your inquiry pre-filled. Hit send and the Partner Services team will reply within one business day. If your email client didn't open, drop us a line directly at <a className="text-ekwa-amber underline" href="mailto:partnerservices@ekwa.com">partnerservices@ekwa.com</a>.</p></div>);
+  return (<form onSubmit={onSubmit} className="bg-white/[0.04] border border-white/15 rounded-2xl p-7 md:p-10 max-w-[760px] mx-auto">
+    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+      <FormInput light label="Your name" name="name" value={data.name} onChange={onChange} required placeholder="Dr. Jane Smith"/>
+      <FormInput light label="Email" type="email" name="email" value={data.email} onChange={onChange} required placeholder="you@yourpractice.com"/>
+    </div>
+    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+      <FormInput light label="Practice or business" name="practice" value={data.practice} onChange={onChange} required placeholder="Your practice name"/>
+      <FormInput light label="Phone (optional)" type="tel" name="phone" value={data.phone} onChange={onChange} placeholder="(555) 123-4567"/>
+    </div>
+    <div className="mb-4">
+      <FieldLabel required light>Interested in (pick one or more)</FieldLabel>
+      <div className="grid sm:grid-cols-2 gap-2.5">
+        {SERVICES.map(svc=>(<label key={svc} className={`flex items-start gap-3 cursor-pointer font-display text-[0.9rem] leading-snug px-4 py-3 rounded-[3px] border transition ${data.services.includes(svc)?'bg-ekwa-orange/20 border-ekwa-orange text-white':'bg-white/[0.03] border-white/15 text-white/80 hover:border-white/30'}`}><input type="checkbox" checked={data.services.includes(svc)} onChange={()=>toggleService(svc)} className="mt-0.5 w-4 h-4 accent-ekwa-orange flex-shrink-0"/><span>{svc}</span></label>))}
+      </div>
+    </div>
+    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+      <FormSelect light label="Currently an Ekwa partner?" name="isPartner" value={data.isPartner} onChange={onChange} required options={['Yes — current partner','Not yet — new to Ekwa']}/>
+      <FormInput light label="Best time to talk (optional)" name="timing" value={data.timing} onChange={onChange} placeholder="Weekday mornings PT"/>
+    </div>
+    <div className="mb-6">
+      <FormTextarea light label="Notes or questions (optional)" name="notes" value={data.notes} onChange={onChange} placeholder="Anything you want us to know before we reach out…" rows={3}/>
+    </div>
+    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+      <SubmitButton>Send my inquiry</SubmitButton>
+      <span className="font-display text-[0.84rem] text-white/55">We reply within one business day.</span>
+    </div>
+  </form>);
+};
+
+const FinalCTA=()=>(<section id="start" className="relative py-28 md:py-36 bg-ekwa-ink text-white overflow-hidden grain">
+  <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute top-0 right-0 w-[800px] h-[600px]" style={{background:'radial-gradient(ellipse, rgba(243,146,0,0.20) 0%, transparent 60%)'}}/>
+    <div className="absolute bottom-0 left-0 w-[700px] h-[500px]" style={{background:'radial-gradient(ellipse, rgba(246,174,45,0.10) 0%, transparent 60%)'}}/>
+  </div>
+  <Container className="relative">
+    <div className="text-center mb-12">
+      <Eyebrow light>Ready when you are</Eyebrow>
+      <h2 className="font-serif font-medium text-[2rem] md:text-[2.8rem] lg:text-[3.4rem] leading-[1.04] mt-6 max-w-[820px] mx-auto">Talk to your Ekwa lead about <em className="italic text-ekwa-amber font-medium">Partner Services</em>.</h2>
+      <p className="mt-6 text-white/65 text-[1.05rem] md:text-lg max-w-[620px] mx-auto leading-relaxed">Tell us about your practice and which services you're interested in. We'll reply within one business day.</p>
+    </div>
+    <ServicesSignupForm/>
+    <div className="mt-12 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-display text-sm text-white/45 w-full">
+      <span className="inline-flex items-center gap-2"><Mail className="w-4 h-4 text-ekwa-amber"/> partnerservices@ekwa.com</span>
+      <span className="inline-flex items-center gap-2"><Calendar className="w-4 h-4 text-ekwa-amber"/> Reply within one business day</span>
+      <span className="inline-flex items-center gap-2"><Globe className="w-4 h-4 text-ekwa-amber"/> partnerservices.ekwa.com</span>
+    </div>
+  </Container>
+</section>);
+
+const Footer=()=>(<footer className="bg-[#050d1a] text-white/65 pt-20 pb-10 font-display text-sm"><Container>
+  <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 pb-14 border-b border-white/10">
+    <div>
+      <img src="https://www.ekwa.com/wp-content/uploads/2025/03/logo.png" alt="Ekwa Marketing" className="h-10 w-auto brightness-0 invert mb-5"/>
+      <p className="text-white/55 leading-relaxed max-w-[320px]">A done-for-you digital marketing company for healthcare practices. Ekwa Partner Services is a productized growth service at <a href="https://partnerservices.ekwa.com" className="text-ekwa-amber hover:underline">partnerservices.ekwa.com</a> — built for Ekwa partners.</p>
+      <div className="mt-6 text-white/50 leading-relaxed">303 Pinetree Way<br/>Mississauga, Ontario L5G 2R4<br/>Canada</div>
+    </div>
+    <div><div className="text-white font-semibold mb-4">This Program</div><ul className="space-y-3"><li><a href="#ecosystem" className="hover:text-ekwa-amber">Media Ecosystem</a></li><li><a href="#services" className="hover:text-ekwa-amber">Services</a></li><li><a href="#pricing" className="hover:text-ekwa-amber">Pricing</a></li><li><a href="#authority" className="hover:text-ekwa-amber">Authority</a></li><li><a href="#how-we-work" className="hover:text-ekwa-amber">How we work together</a></li><li><a href="#faq" className="hover:text-ekwa-amber">FAQ</a></li></ul></div>
+    <div><div className="text-white font-semibold mb-4">Ekwa</div><ul className="space-y-3"><li><a href="https://www.ekwa.com/" className="hover:text-ekwa-amber">Home</a></li><li><a href="https://services.ekwa.com/" className="hover:text-ekwa-amber">Services</a></li><li><a href="https://designs.ekwa.com/" className="hover:text-ekwa-amber">Client Portfolio</a></li><li><a href="https://www.ekwa.com/in-the-media/" className="hover:text-ekwa-amber">In the Media</a></li><li><a href="https://www.ekwa.com/reviews/" className="hover:text-ekwa-amber">Reviews</a></li></ul></div>
+    <div><div className="text-white font-semibold mb-4">Partner Services</div><ul className="space-y-3"><li className="flex items-center gap-2"><Mail className="w-3.5 h-3.5 text-ekwa-amber"/> partnerservices@ekwa.com</li><li><a href="https://partnerservices.ekwa.com" className="hover:text-ekwa-amber">partnerservices.ekwa.com</a></li><li className="flex items-center gap-2"><Calendar className="w-3.5 h-3.5 text-ekwa-amber"/> Reply within 1 business day</li></ul></div>
+  </div>
+  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 text-white/45 text-[0.82rem]">
+    <div>© 2026 Ekwa Marketing · All rights reserved · Partner Services is built for Ekwa partners</div>
+    <div className="flex items-center gap-5"><a href="https://www.ekwa.com/privacy-policy/" className="hover:text-ekwa-amber">Privacy Policy</a><a href="https://www.ekwa.com/accessibility-statement/" className="hover:text-ekwa-amber">Accessibility</a><a href="https://www.ekwa.com/contact-us/" className="hover:text-ekwa-amber">Contact</a></div>
+  </div>
+</Container></footer>);
+
+const App=()=>(<><TopBar/><Navbar/><main><Hero/><TrustStrip/><ProgramIntro/><MediaEcosystem/><Services/><Pricing/><EventsComingSoon/><Authority/><HowItWorks/><HowWeWorkTogether/><FAQ/><FinalCTA/></main><Footer/></>);
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+</script>
+</body>
+</html>
